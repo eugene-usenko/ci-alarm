@@ -1,6 +1,18 @@
+
 #include <RH_ASK.h>
 #include <SPI.h>
 RH_ASK rftx;
+
+void dump(uint8_t* data, uint8_t len) {
+  Serial.print("sent: ");
+  for(int i=0;i<len;i++){
+    Serial.print("0x");
+    Serial.print(data[i] < 16 ? "0" : "");
+    Serial.print(data[i], HEX); 
+    Serial.print(" ");
+  }
+  Serial.println(); 
+}
 
 void setup()
 {
@@ -10,14 +22,19 @@ void setup()
 
 void loop()
 {
-    if (Serial.available())
+    if (Serial.available() > 0)
     {
-        uint8_t cmd[5];
-        size_t len = sizeof(c) - 1;
-        size_t n = Serial.readBytesUntil('\r', cmd, len);
+      String cmd = Serial.readString();
+      if(cmd == "on" || cmd == "off"){
 
-        rftx.send(cmd, n);
+        uint8_t len = cmd.length();
+        uint8_t data[len];
+        cmd.toCharArray(data, len);
+
+        rftx.send(data, len);
         rftx.waitPacketSent();
         delay(1000);
+        dump(data, len); 
+      }
     }
 }
