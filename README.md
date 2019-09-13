@@ -1,4 +1,10 @@
-# ci-alarm
+# Troubleshoting
+
+```bash
+# avrdude: ser_open(): can't open device "/dev/ttyUSB0": Permission denied
+sudo usermod -a -G dialout $USER
+sudo chmod a+rw /dev/ttyUSB0
+```
 
 # Resources
 

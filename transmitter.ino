@@ -1,4 +1,3 @@
-
 #include <RH_ASK.h>
 #include <SPI.h>
 RH_ASK rftx;
