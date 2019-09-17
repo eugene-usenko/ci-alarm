@@ -1,39 +1,35 @@
-#include <RH_ASK.h>
-#include <SPI.h>
-RH_ASK rftx;
+#include <ESP8266WiFi.h>
 
-void dump(uint8_t* data, uint8_t len) {
-  Serial.print("sent: ");
-  for(int i=0;i<len;i++){
-    Serial.print("0x");
-    Serial.print(data[i] < 16 ? "0" : "");
-    Serial.print(data[i], HEX); 
-    Serial.print(" ");
+char ssid[] = "ci-alarm";           
+char pass[] = "ci-alarm";         
+
+IPAddress server(192,168,4,15);     
+WiFiClient client;
+
+void setup() {
+  Serial.begin(9600);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, pass);           
+
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
   }
-  Serial.println(); 
+  Serial.println("ok");
+//  Serial.print("LocalIP:"); Serial.println(WiFi.localIP());
+//  Serial.println("MAC:" + WiFi.macAddress());
+//  Serial.print("Gateway:"); Serial.println(WiFi.gatewayIP());
+//  Serial.print("AP MAC:"); Serial.println(WiFi.BSSIDstr());
+//  pinMode(ledPin, OUTPUT);
 }
 
-void setup()
-{
-    Serial.begin(9600);
-    rftx.init();
-}
-
-void loop()
-{
-    if (Serial.available() > 0)
-    {
-      String cmd = Serial.readString();
-      if(cmd == "on" || cmd == "off"){
-
-        uint8_t len = cmd.length();
-        uint8_t data[len];
-        cmd.toCharArray(data, len);
-
-        rftx.send(data, len);
-        rftx.waitPacketSent();
-        delay(1000);
-        dump(data, len); 
-      }
-    }
+void loop() { 
+  if (Serial.available() > 0) {
+    String cmd = Serial.readString();
+    client.connect(server, 80);
+    client.print(cmd+"\n");
+    client.flush();
+    client.stop();  
+  }
+  delay(2000);
 }
