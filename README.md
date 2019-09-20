@@ -1,3 +1,8 @@
+# Env. Setup
+
+* OSX users may need to download and install [`CP210x USB to UART Bridge VCP Driver`](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+* Add [ESP8266 board config](http://arduino.esp8266.com/stable/package_esp8266com_index.json) to your `Arduino IDE` in the Preferences dialog
+
 # Troubleshoting
 
 ```bash
@@ -14,3 +19,5 @@ sudo chmod a+rw /dev/ttyUSB0
 * [Achtung!](https://habr.com/ru/company/mailru/blog/193606/)
 * [RadioHead](http://www.airspayce.com/mikem/arduino/RadioHead/)
 * [Cron Jobs and Crontab on Linux Explained](https://devconnected.com/cron-jobs-and-crontab-on-linux-explained/)
+* [ESP8266 Programming Using Arduino IDE (Mac OSX and Windows)](https://www.youtube.com/watch?v=G6CqvhXpBKM)
+* [](http://henrysbench.capnfatz.com/henrys-bench/arduino-projects-tips-and-more/powering-the-esp-12e-nodemcu-development-board/)
